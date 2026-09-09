@@ -1,0 +1,2 @@
+package com.nutribite.ai.tracking.repository; import com.nutribite.ai.model.User; import com.nutribite.ai.tracking.entity.WeightLog; import org.springframework.data.jpa.repository.*; import java.time.LocalDate; import java.util.*;
+public interface WeightLogRepository extends JpaRepository<WeightLog,Long>{ List<WeightLog> findByUserOrderByLoggedOnDesc(User user); Optional<WeightLog> findFirstByUserOrderByLoggedOnDesc(User user); Optional<WeightLog> findByIdAndUser(Long id,User user); Optional<WeightLog> findByUserAndLoggedOn(User user,LocalDate date);}

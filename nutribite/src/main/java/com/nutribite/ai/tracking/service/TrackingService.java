@@ -1,0 +1,2 @@
+package com.nutribite.ai.tracking.service; import com.nutribite.ai.tracking.dto.*; import java.time.LocalDate; import java.util.List;
+public interface TrackingService { WaterLogResponse addWater(WaterLogRequest r); List<WaterLogResponse> waterToday(); WaterTodayResponse waterSummary(); void deleteWater(Long id); WeightLogResponse addWeight(WeightLogRequest r); WeightLogResponse currentWeight(); List<WeightLogResponse> weightHistory(); void deleteWeight(Long id); }

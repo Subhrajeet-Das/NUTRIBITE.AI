@@ -1,0 +1,1 @@
+package com.nutribite.ai.tracking.dto; import lombok.*; import java.time.LocalDate; @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder public class WeightLogResponse {private Long id; private Double weightKg; private LocalDate loggedOn; private String note;}

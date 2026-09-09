@@ -1,0 +1,2 @@
+package com.nutribite.ai.goals.dto; import jakarta.validation.constraints.DecimalMin; import lombok.*;
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder public class GoalRequest { @DecimalMin("800") private Double targetCalories; @DecimalMin("0") private Double targetProtein; @DecimalMin("0") private Double targetCarbs; @DecimalMin("0") private Double targetFat; @DecimalMin("0") private Double targetFibre; @DecimalMin("20") private Double targetWeightKg; }

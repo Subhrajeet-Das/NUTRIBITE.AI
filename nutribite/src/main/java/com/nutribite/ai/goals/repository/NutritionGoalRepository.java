@@ -1,0 +1,1 @@
+package com.nutribite.ai.goals.repository; import com.nutribite.ai.goals.entity.NutritionGoal; import com.nutribite.ai.model.User; import org.springframework.data.jpa.repository.JpaRepository; import java.util.Optional; public interface NutritionGoalRepository extends JpaRepository<NutritionGoal,Long>{Optional<NutritionGoal> findByUser(User user);}

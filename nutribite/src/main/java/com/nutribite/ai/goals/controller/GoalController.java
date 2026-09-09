@@ -1,0 +1,2 @@
+package com.nutribite.ai.goals.controller; import com.nutribite.ai.goals.dto.*; import com.nutribite.ai.goals.service.GoalService; import jakarta.validation.Valid; import lombok.RequiredArgsConstructor; import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/goals") @RequiredArgsConstructor public class GoalController {private final GoalService service; @GetMapping public GoalResponse get(){return service.get();} @PutMapping public GoalResponse save(@Valid @RequestBody GoalRequest r){return service.save(r);}}

@@ -82,7 +82,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.gender = gender;
+        this.gender = gender == null ? Gender.OTHER : gender;
         this.profile = profile;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

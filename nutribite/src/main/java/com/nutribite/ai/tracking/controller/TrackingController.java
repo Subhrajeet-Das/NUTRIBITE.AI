@@ -1,0 +1,6 @@
+package com.nutribite.ai.tracking.controller;
+import com.nutribite.ai.tracking.dto.*; import com.nutribite.ai.tracking.service.TrackingService; import jakarta.validation.Valid; import lombok.RequiredArgsConstructor; import org.springframework.web.bind.annotation.*; import java.util.List;
+@RestController @RequestMapping("/api") @RequiredArgsConstructor public class TrackingController{private final TrackingService service;
+ @PostMapping("/water") public WaterLogResponse water(@Valid @RequestBody WaterLogRequest r){return service.addWater(r);} @GetMapping("/water/today") public List<WaterLogResponse> waterToday(){return service.waterToday();} @GetMapping("/water/summary") public WaterTodayResponse waterSummary(){return service.waterSummary();} @DeleteMapping("/water/{id}") public void deleteWater(@PathVariable Long id){service.deleteWater(id);}
+ @PostMapping("/weight") public WeightLogResponse weight(@Valid @RequestBody WeightLogRequest r){return service.addWeight(r);} @GetMapping("/weight/current") public WeightLogResponse currentWeight(){return service.currentWeight();} @GetMapping("/weight/history") public List<WeightLogResponse> weightHistory(){return service.weightHistory();} @DeleteMapping("/weight/{id}") public void deleteWeight(@PathVariable Long id){service.deleteWeight(id);}
+}

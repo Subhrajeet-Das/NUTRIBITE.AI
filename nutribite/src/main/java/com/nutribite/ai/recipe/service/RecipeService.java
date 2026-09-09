@@ -1,0 +1,3 @@
+package com.nutribite.ai.recipe.service;
+import com.nutribite.ai.model.enums.DietType; import com.nutribite.ai.nutrition.model.MealType; import com.nutribite.ai.recipe.dto.RecipeRequest; import com.nutribite.ai.recipe.dto.RecipeResponse; import org.springframework.data.domain.Page;
+public interface RecipeService { Page<RecipeResponse> list(String q,MealType mealType,DietType dietType,int page,int size); RecipeResponse get(Long id); RecipeResponse create(RecipeRequest r); RecipeResponse update(Long id,RecipeRequest r); void delete(Long id); RecipeResponse favorite(Long id); void unfavorite(Long id); Page<RecipeResponse> favorites(int page,int size); }

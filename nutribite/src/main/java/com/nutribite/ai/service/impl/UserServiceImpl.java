@@ -39,20 +39,9 @@ public class UserServiceImpl implements UserService {
 
         User user = UserMapper.toEntity(request);
 
-        // DEBUG
-        System.out.println("====================================");
-        System.out.println("REGISTER REQUEST");
-        System.out.println("Register Password : " + request.getPassword());
-
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-        System.out.println("Encoded Password  : " + encodedPassword);
-
-        user.setPassword(encodedPassword);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         User savedUser = userRepository.save(user);
-
-        System.out.println("Saved Hash        : " + savedUser.getPassword());
-        System.out.println("====================================");
 
         return UserMapper.toResponse(savedUser);
     }
@@ -64,19 +53,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() ->
                         new InvalidCredentialsException("Invalid email or password"));
 
-        // DEBUG
-        System.out.println("====================================");
-        System.out.println("LOGIN REQUEST");
-        System.out.println("Entered Password : " + request.getPassword());
-        System.out.println("Stored Hash      : " + user.getPassword());
-
         boolean matches = passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword()
         );
-
-        System.out.println("Password Match   : " + matches);
-        System.out.println("====================================");
 
         if (!matches) {
             throw new InvalidCredentialsException("Invalid email or password");

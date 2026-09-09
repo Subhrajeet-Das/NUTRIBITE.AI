@@ -1,0 +1,1 @@
+package com.nutribite.ai.tracking.dto; import lombok.*; @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder public class WaterTodayResponse {private Double goalLiters; private Double consumedLiters; private Double remainingLiters;}

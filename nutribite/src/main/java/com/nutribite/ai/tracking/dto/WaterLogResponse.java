@@ -1,0 +1,1 @@
+package com.nutribite.ai.tracking.dto; import lombok.*; import java.time.LocalDateTime; @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder public class WaterLogResponse {private Long id; private Double amountLiters; private LocalDateTime loggedAt; private String note;}

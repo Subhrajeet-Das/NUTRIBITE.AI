@@ -17,7 +17,7 @@ public class UserMapper {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setGender(request.getGender());
+        user.setGender(request.getGender() == null ? com.nutribite.ai.model.enums.Gender.OTHER : request.getGender());
 
         // Default role for every new user
         user.setRole(Role.USER);

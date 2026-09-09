@@ -1,31 +1,3 @@
 package com.nutribite.ai.health.calculator;
-
-import org.springframework.stereotype.Component;
-
-import com.nutribite.ai.model.enums.Gender;
-
-@Component
-public class BMRCalculator {
-
-    /**
-     * Calculate BMR using the Mifflin-St Jeor Equation
-     */
-    public double calculate(
-            Gender gender,
-            double weightKg,
-            double heightCm,
-            int age) {
-
-        if (gender == Gender.MALE) {
-            return (10 * weightKg)
-                    + (6.25 * heightCm)
-                    - (5 * age)
-                    + 5;
-        }
-
-        return (10 * weightKg)
-                + (6.25 * heightCm)
-                - (5 * age)
-                - 161;
-    }
-}
+import com.nutribite.ai.model.enums.Gender; import org.springframework.stereotype.Component;
+@Component public class BMRCalculator { public double calculate(Gender gender,double weightKg,double heightCm,int age){double base=(10*weightKg)+(6.25*heightCm)-(5*age); if(gender==Gender.MALE)return base+5; if(gender==Gender.FEMALE)return base-161; return base;} }

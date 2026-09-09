@@ -1,0 +1,4 @@
+package com.nutribite.ai.goals.entity;
+import com.nutribite.ai.model.User; import jakarta.persistence.*; import lombok.*; import java.time.LocalDateTime;
+@Entity @Table(name="nutrition_goals",uniqueConstraints=@UniqueConstraint(name="uk_nutrition_goal_user",columnNames="user_id")) @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+public class NutritionGoal { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @OneToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="user_id",nullable=false,unique=true) private User user; private Double targetCalories; private Double targetProtein; private Double targetCarbs; private Double targetFat; private Double targetFibre; private Double targetWeightKg; @Column(nullable=false) private LocalDateTime updatedAt; @PrePersist @PreUpdate void touch(){updatedAt=LocalDateTime.now();}}

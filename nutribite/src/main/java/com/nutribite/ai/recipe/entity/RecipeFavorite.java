@@ -1,0 +1,4 @@
+package com.nutribite.ai.recipe.entity;
+import com.nutribite.ai.model.User; import jakarta.persistence.*; import lombok.*; import java.time.LocalDateTime;
+@Entity @Table(name="favorites",uniqueConstraints=@UniqueConstraint(name="uk_favorite_user_recipe",columnNames={"user_id","recipe_id"})) @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+public class RecipeFavorite { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @ManyToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="user_id",nullable=false) private User user; @ManyToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="recipe_id",nullable=false) private Recipe recipe; @Column(nullable=false,updatable=false) private LocalDateTime createdAt; @PrePersist void create(){createdAt=LocalDateTime.now();}}

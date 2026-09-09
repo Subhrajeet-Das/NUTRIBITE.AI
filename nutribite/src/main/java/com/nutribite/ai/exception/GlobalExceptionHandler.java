@@ -1,41 +1,11 @@
 package com.nutribite.ai.exception;
-
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(FoodNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleFoodNotFound(
-            FoodNotFoundException ex) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", "Not Found");
-        body.put("message", ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("error", "Internal Server Error");
-        body.put("message", ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }
+import org.springframework.dao.DataIntegrityViolationException; import org.springframework.http.*; import org.springframework.web.bind.MethodArgumentNotValidException; import org.springframework.web.bind.annotation.*; import java.time.LocalDateTime; import java.util.*;
+@RestControllerAdvice public class GlobalExceptionHandler {
+ private ResponseEntity<Map<String,Object>> body(HttpStatus status,String message){Map<String,Object>b=new LinkedHashMap<>();b.put("timestamp",LocalDateTime.now());b.put("status",status.value());b.put("error",status.getReasonPhrase());b.put("message",message);return ResponseEntity.status(status).body(b);}
+ @ExceptionHandler(FoodNotFoundException.class) public ResponseEntity<Map<String,Object>> food(FoodNotFoundException e){return body(HttpStatus.NOT_FOUND,e.getMessage());}
+ @ExceptionHandler(NoSuchElementException.class) public ResponseEntity<Map<String,Object>> missing(NoSuchElementException e){return body(HttpStatus.NOT_FOUND,e.getMessage()==null?"Resource not found":e.getMessage());}
+ @ExceptionHandler(IllegalArgumentException.class) public ResponseEntity<Map<String,Object>> illegal(IllegalArgumentException e){return body(HttpStatus.BAD_REQUEST,e.getMessage());}
+ @ExceptionHandler(DataIntegrityViolationException.class) public ResponseEntity<Map<String,Object>> conflict(DataIntegrityViolationException e){return body(HttpStatus.CONFLICT,"The request conflicts with existing data.");}
+ @ExceptionHandler(MethodArgumentNotValidException.class) public ResponseEntity<Map<String,Object>> validation(MethodArgumentNotValidException e){Map<String,String> errors=new LinkedHashMap<>();e.getBindingResult().getFieldErrors().forEach(x->errors.put(x.getField(),x.getDefaultMessage()));Map<String,Object>b=new LinkedHashMap<>();b.put("timestamp",LocalDateTime.now());b.put("status",400);b.put("error","Bad Request");b.put("message","Validation failed");b.put("fields",errors);return ResponseEntity.badRequest().body(b);}
+ @ExceptionHandler(Exception.class) public ResponseEntity<Map<String,Object>> generic(Exception e){return body(HttpStatus.INTERNAL_SERVER_ERROR,"An unexpected error occurred.");}
 }
